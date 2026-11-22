@@ -1,7 +1,7 @@
 import { expect, test } from 'claude-code/testing'
 import type { TestBody } from 'claude-code/testing'
 
-import { phaseBar } from '../hooks/register'
+import { clock, phaseBar, runOf, sessionLine, workerRole } from '../hooks/register'
 
 const NOW = Date.parse('2026-11-22T12:00:00Z')
 const ROOT = '/home/t/events-release-runs'
@@ -108,4 +108,47 @@ test('the phase bar colours done, current and remaining segments', async () => {
   const labels = [...svg.matchAll(/<text x="([\d.]+)"/g)].map(m => m[1])
   expect(labels).toEqual(bars)
   expect(svg).toContain('>Review</text>')
+})
+
+
+test('worker prompts are recognised and tied to their run', () => {
+  const prompt = 'Read /kit/workers/video-session.md and follow it.\nKIT=/kit\nRUN=/Users/x/events-release-runs/2026-11-22-coupon-codes'
+  expect(workerRole(prompt)).toBe('video')
+  expect(workerRole('Read /kit/workers/note-session.md')).toBe('note')
+  expect(workerRole('Explore the repo')).toBe(null)
+  expect(runOf(prompt)).toBe('2026-11-22-coupon-codes')
+  expect(runOf('RUN=/a/b/2026-11-22-x/ next')).toBe('2026-11-22-x')
+  expect(clock(75_000)).toBe('1:15')
+})
+
+test('the status line merges the run file with the live worker', () => {
+  const base = { agentId: 'a1', role: 'video' as const, run: 'r', startedAt: 0, contextTokens: 82_000, contextMax: 200_000 }
+  const doing = { name: 'video', state: 'doing', step: 'voice' }
+  expect(sessionLine(doing, { ...base, status: 'running' }, 192_000)).toEqual({ text: 'Video working · voice · 3:12 · 41% context', state: 'doing' })
+  // the worker started before it wrote its first status: still shown as working
+  expect(sessionLine({ name: 'video', state: 'todo', step: '' }, { ...base, status: 'running' }, 5_000).state).toBe('doing')
+  // a worker that died before finishing shows as stopped, in red
+  expect(sessionLine(doing, { ...base, status: 'failed', endedAt: 60_000 }, 90_000)).toEqual({ text: 'Video stopped · voice · 1:00', state: 'blocked' })
+  // done is done, whatever the worker's own turn said
+  expect(sessionLine({ name: 'note', state: 'done', step: '' }, { ...base, role: 'note', status: 'done', endedAt: 110_000 }, 200_000).text).toBe('Note done · 1:50')
+})
+
+test('a spawned build worker shows live in the band', async ($, on) => {
+  fakeFs(on, {
+    [`${ROOT}/2026-11-22-coupon-codes/status.json`]: status({ stage: 'build', sessions: { video: { state: 'todo', step: '' }, note: { state: 'todo', step: '' } } }),
+  })
+  on('agent.spawn', () => ({ model: 'claude-opus-5-5', agentId: 'agent-video-1' }))
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.agent.spawn({
+    tool_use_id: 't1',
+    prompt: `Read /kit/workers/video-session.md and follow it.\nKIT=/kit\nRUN=${ROOT}/2026-11-22-coupon-codes`,
+    description: 'Video worker',
+    subagentType: 'general-purpose',
+    parentModel: 'claude-opus-5-5',
+  } as Parameters<typeof $.agent.spawn>[0])
+
+  const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
+  expect((await ui.find({ type: 'Text', text: /^Video/ }))?.text).toMatch(/^Video working · 0:00/)
+  expect((await ui.find({ type: 'Text', text: /^Note/ }))?.text).toBe('Note waiting')
+  await ui.unmount()
 })

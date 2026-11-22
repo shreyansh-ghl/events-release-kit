@@ -1,5 +1,5 @@
 ---
-name: events-release
+name: release
 description: Make the release pack for something the HighLevel Events team shipped (narrated house-style video, release note, screenshot cards) and post it for review in #events-core-internal. Reads the ClickUp task and PRs first, interviews the author only for gaps, captures real screens from the Northstar staging sub-account in Chrome, and stops at two checkpoints. Use when an Events teammate says "release note", "release video", "we shipped X", or runs /events-release.
 ---
 

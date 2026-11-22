@@ -1,52 +1,64 @@
 # Events release kit
 
 A Claude Code plugin for the HighLevel Events team. Tell Claude what you shipped and it makes the whole release pack:
+a narrated house-style video, up to 9 screenshot cards, the release note in the team format, and the Release Update
+Form handoff. Same theme, same voice and the same fictional Northstar world whoever makes it; real product UI only.
 
-- a **narrated release video** (30–120 s) in the house style, with the house AI voice,
-- up to **9 screenshot cards** (3200×2000) in the house look,
-- the **release note** in the team format, ready for `#events-core-internal`,
-- a **form handoff** file for the Release Update Form.
+## Install
 
-Every pack looks and sounds the same whoever makes it: one theme, one voice, one fictional world (the Northstar staging
-sub-account), real product UI only. A band above the Claude Code prompt shows progress while it runs.
+Say this to Claude Code:
 
-## Install (one line)
+> install https://github.com/shreyansh-ghl/events-release-kit
 
-```bash
-claude plugin marketplace add shreyansh-ghl/events-release-kit && claude plugin install events-release@events-release-kit
-```
+That's it. When it's done, restart Claude Code and run **`/events-release:release`**.
 
-Or inside Claude Code: `/plugin marketplace add shreyansh-ghl/events-release-kit`, then
-`/plugin install events-release@events-release-kit`. Restart Claude Code (or start a new session) afterwards.
+---
 
-Update later with `claude plugin marketplace update events-release-kit`.
+### Installing with Claude (instructions for Claude)
 
-## First-time setup
+When someone asks you to install this repository, do exactly this, in order, and tell them briefly what you did.
 
-The kit checks all of this itself at the start of every run (preflight) and tells you the exact fix for anything missing.
+1. Install the plugin with the `claude` CLI:
 
-| Needed for | What |
-|---|---|
-| Everything | macOS, Python 3.10+ with Pillow (`python3 -m pip install --user Pillow`), Node 20+, `ffmpeg`, Google Chrome, `gh` signed in (`gh auth login`), Xcode command line tools (`xcode-select --install`) |
-| Screens + posting | The **Claude in Chrome** extension, connected, in a Chrome where you are signed in to staging and Slack |
-| ClickUp | The `ghl-ai` MCP connected in Claude Code |
-| Video | The **Voicebox** app running (local text-to-speech on `localhost:17493`); the kit creates the house narrator profile on first run. Remotion's npm packages install themselves on the first run |
-| Northstar | A user on the Northstar Collective staging sub-account (ask the kit owner) |
+   ```bash
+   claude plugin marketplace add shreyansh-ghl/events-release-kit 2>/dev/null || claude plugin marketplace update events-release-kit
+   claude plugin install events-release@events-release-kit
+   ```
+
+   If `claude plugin` is not available (no `claude` on PATH, or it errors), ask the person to type these two lines in
+   the Claude Code prompt themselves, one at a time, then continue with step 2:
+   `/plugin marketplace add shreyansh-ghl/events-release-kit` and `/plugin install events-release@events-release-kit`.
+
+2. Run the one-time setup (it installs Pillow, ffmpeg, gh and the video packages itself, then checks everything):
+
+   ```bash
+   python3 -I "$(ls -d ~/.claude/plugins/cache/events-release-kit/events-release/*/ | sort -V | tail -1)skills/release/scripts/setup.py"
+   ```
+
+   (If `CLAUDE_CONFIG_DIR` is set, use it instead of `~/.claude`.)
+
+3. Show the person the "Things only you can do" list the setup prints (Chrome extension, staging + Slack sign-in,
+   Voicebox, Northstar access, ghl-ai MCP). Do not do those for them: they involve their accounts and apps.
+
+4. Tell them to restart Claude Code, then run `/events-release:release` (or say "make the release pack for
+   <ClickUp link> <PR link>").
+
+---
 
 ## Use
 
-In Claude Code, say what you shipped:
+Run `/events-release:release`, or just say what you shipped:
 
-> Make the release pack for coupon codes: https://app.clickup.com/t/… and https://github.com/GoHighLevel/…/pull/…
+> Make the release pack for coupon codes: https://app.clickup.com/t/… https://github.com/GoHighLevel/…/pull/…
 
-or run `/events-release:events-release`. The kit then:
+The kit then:
 
 1. **Preflight**: checks tools, Chrome, Slack, ClickUp and GitHub before asking you anything.
 2. **Reads** the ClickUp task and PRs, and plays back what it understood in 5 lines.
 3. **Interviews** you only for the gaps (release type, label, surfaces, video yes/no, availability…).
 4. **Checks Northstar**: the demo event is there and its dates are still upcoming.
-5. **Captures** real screens in your Chrome (read-only outside Northstar) and asks you for phone screenshots if the
-   mobile app is involved; renders the cards.
+5. **Captures** real screens in your Chrome (read-only outside Northstar) and asks for phone screenshots if the mobile
+   app is involved; renders the cards.
 6. **Checkpoint A**: you approve the shots and the one-paragraph story.
 7. **Builds** the video and the note in two parallel sessions.
 8. **QA**: OCR on every image and video frame (no real names, no staging junk, no stray HTML), note format lint, size limits.
@@ -54,8 +66,11 @@ or run `/events-release:events-release`. The kit then:
 10. **Posts** to `#events-core-internal` from your own Slack, only after you say "post it".
 11. **Hands off** the Release Update Form fields. You file the form yourself.
 
-Runs live in `~/events-release-runs/<date>-<slug>/`. The progress band follows them; `/release-progress` brings it back
-if you hide it.
+A band above the prompt follows the run: a phase bar (Prepare › Capture › Build › Review › Ship), the video and note
+sessions live (running time, how full their context is, done or stopped), and an amber "Your turn" when it needs you.
+`/release-progress` brings it back if you hide it. Runs live in `~/events-release-runs/<date>-<slug>/`.
+
+Update to the latest version: `claude plugin marketplace update events-release-kit`, then restart Claude Code.
 
 ## Rules the kit enforces
 
@@ -67,12 +82,13 @@ if you hide it.
 
 ```
 plugins/events-release/
-  skills/events-release/   the skill: SKILL.md, reference/ (guardrails, interview, capture, note format…),
-                           workers/ (video + note session prompts), scripts/ (run state, preflight, capture, QA),
-                           cards/ (card renderer), video/ (Remotion template + music bed), voice/ (house voice),
-                           northstar/ (the shared fictional world + brand art), fonts/, tokens.json (house look)
-  hooks/register.tsx       the progress band above the prompt
+  skills/release/      the skill: SKILL.md, reference/ (guardrails, interview, capture, note format…),
+                       workers/ (video + note session prompts), scripts/ (setup, run state, preflight, capture, QA),
+                       cards/ (card renderer), video/ (Remotion template + music bed), voice/ (house voice),
+                       northstar/ (the shared fictional world + brand art), fonts/, tokens.json (house look)
+  hooks/register.tsx   the progress band above the prompt
 ```
 
-Tests: `uvx --with pillow pytest tests -q` in `skills/events-release/` and in `skills/events-release/video/`;
-`claude plugin test plugins/events-release` for the band. Fonts are under the SIL Open Font License.
+Tests: `uvx --with pillow pytest tests -q` in `skills/release/` and in `skills/release/video/`;
+`claude plugin test plugins/events-release` for the band. Fonts are under the SIL Open Font License. The band's live
+worker tracking follows the approach of [savvy-progress](https://github.com/johnnyvizz/claude-kit/tree/main/plugins/savvy-progress) (MIT).
