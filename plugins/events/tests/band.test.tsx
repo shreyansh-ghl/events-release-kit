@@ -21,7 +21,7 @@ const status = (over: Record<string, unknown>) =>
   })
 
 const BAND = {
-  plugin: 'events-release',
+  plugin: 'events',
   component: 'AbovePrompt',
   props: { hasSurvey: false, isCollapsed: false, isWorking: false, maxRows: 10, bodyColumns: 120, scroll: { offset: 0, bodyRows: 10 }, view: {} },
 } as const

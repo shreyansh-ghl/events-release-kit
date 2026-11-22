@@ -3,6 +3,6 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .claude-plugin/types/
-plugins/events-release/.claude-plugin/types/
-plugins/events-release/tsconfig.json
+plugins/events/.claude-plugin/types/
+plugins/events/tsconfig.json
 .aw_docs/

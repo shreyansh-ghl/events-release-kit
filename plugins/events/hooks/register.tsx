@@ -7,12 +7,12 @@ import type { RunSummary, SessionSummary, WorkerRun } from '../types'
  * Events release kit progress: reads ~/events-release-runs/<run>/status.json (written by the kit's run.py)
  * every few seconds and shows the active runs in a band above the prompt.
  */
-const runs = atom({ plugin: 'events-release', key: 'runs' } as const, [] as RunSummary[])
-const isHidden = atom({ plugin: 'events-release', key: 'isHidden' } as const, false)
+const runs = atom({ plugin: 'events', key: 'runs' } as const, [] as RunSummary[])
+const isHidden = atom({ plugin: 'events', key: 'isHidden' } as const, false)
 /** Build workers seen live (subagent tracking adapted from savvy-progress by johnnyvizz, MIT). */
-const workers = atom({ plugin: 'events-release', key: 'workers' } as const, [] as WorkerRun[])
+const workers = atom({ plugin: 'events', key: 'workers' } as const, [] as WorkerRun[])
 /** Clock for running workers' elapsed time; only ticks while one runs. */
-const now = atom({ plugin: 'events-release', key: 'now' } as const, 0)
+const now = atom({ plugin: 'events', key: 'now' } as const, 0)
 
 const STAGES: [string, string][] = [
   ['preflight', 'Preflight'],
@@ -168,7 +168,7 @@ async function refresh($: EngineInterface): Promise<void> {
       status = JSON.parse(await $.fs.read(file)) as Status
     } catch (err) {
       // run.py writes atomically, so a bad file is a real problem: say so once in the log and skip it
-      $.ui.log(`events-release: cannot read ${file}: ${String(err)}`)
+      $.ui.log(`events: cannot read ${file}: ${String(err)}`)
       continue
     }
     const summary = summarize(entry.name, status, now)

@@ -26,6 +26,6 @@ export type WorkerRun = {
 
 declare module 'claude-code' {
   interface PluginState {
-    'events-release': { runs: RunSummary[]; isHidden: boolean; workers: WorkerRun[]; now: number }
+    'events': { runs: RunSummary[]; isHidden: boolean; workers: WorkerRun[]; now: number }
   }
 }

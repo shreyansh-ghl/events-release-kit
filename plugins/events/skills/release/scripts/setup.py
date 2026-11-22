@@ -73,7 +73,7 @@ def main(argv: list[str]) -> int:
         print(f"  {i}. {step}")
     if failed:
         print(f"\nCould not install automatically: {', '.join(failed)} (see the messages above).")
-    print("\nThen restart Claude Code and run /events-release:release, or say: make the release pack for <ClickUp link> <PR link>.")
+    print("\nThen restart Claude Code and run /events:release, or say: make the release pack for <ClickUp link> <PR link>.")
     return 1 if failed or pre.returncode else 0
 
 

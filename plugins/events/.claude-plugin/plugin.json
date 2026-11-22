@@ -1,8 +1,10 @@
 {
-  "name": "events-release",
-  "version": "0.2.0",
+  "name": "events",
+  "version": "0.3.0",
   "description": "Release pack for anything the HighLevel Events team ships: narrated house-style video, release note in the team format and screenshot cards, captured from the Northstar staging account, plus a live progress band above the prompt.",
-  "author": { "name": "Shreyansh Shrey" },
+  "author": {
+    "name": "Shreyansh Shrey"
+  },
   "repository": "https://github.com/shreyansh-ghl/events-release-kit",
   "types": "./types/index.d.ts"
 }
