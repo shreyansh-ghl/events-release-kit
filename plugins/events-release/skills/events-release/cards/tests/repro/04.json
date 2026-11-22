@@ -1,0 +1,22 @@
+{
+  "layout": "side",
+  "kicker": "02 \u00b7 NETWORKING",
+  "dot": "amber",
+  "headline": "Connections that\n*outlast* the event.",
+  "subhead": "Find people, send a personal note or scan a badge, and keep the conversation going in chat. Email and phone stay private.",
+  "stage": "phones",
+  "phones": [
+    {
+      "src": "in-04-phone1.png",
+      "caption": "PROFILE"
+    },
+    {
+      "src": "in-04-phone2.png",
+      "caption": "CONNECT"
+    },
+    {
+      "src": "in-04-phone3.png",
+      "caption": "CHAT"
+    }
+  ]
+}

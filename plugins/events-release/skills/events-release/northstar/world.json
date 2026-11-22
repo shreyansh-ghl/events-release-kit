@@ -1,0 +1,430 @@
+{
+  "_about": "The shared fictional Northstar world. Every screenshot and video draws from this list. It mirrors what is seeded in the Northstar staging sub-account (22 Nov 2026). Add new people/companies here first, then in staging. All names, companies and emails are fictional.",
+  "staging": {
+    "agency": "Default Staging account (do not modify)",
+    "location_id": "D8giS3bOVOO2EleXW0wu",
+    "builder_events_url": "https://staging.gohighlevel.com/v2/location/D8giS3bOVOO2EleXW0wu/memberships/events",
+    "event_id": "6b02c819c7d72b75c34d76b8",
+    "portal_url": "https://d8gis3bovoo2elexw0wu.staging.clientclub.net/",
+    "owner": "Shreyansh",
+    "persona": {
+      "name": "Jordan Blake",
+      "ticket": "VIP Pass",
+      "login": "owner's +northstar alias (owner signs in; never Claude)"
+    }
+  },
+  "brand": {
+    "organization": "Northstar Collective",
+    "tagline": "Events, courses and community for Northstar members.",
+    "website": "northstarcollective.example",
+    "email": "hello@northstarcollective.example",
+    "colors": {
+      "navy": "#201c46",
+      "coral": "#fa694c"
+    },
+    "assets": {
+      "logo_square": "northstar/logo-square.png",
+      "logo_200": "northstar/logo-200.png",
+      "favicon": "northstar/favicon-64.png",
+      "cover": "northstar/cover-northstar-summit.png",
+      "portal_image": "northstar/portal-image.png"
+    }
+  },
+  "event": {
+    "name": "Northstar Summit",
+    "name_rule": "No year in the name; dates roll forward yearly (health check).",
+    "dates": "Oct 26–29, 2027",
+    "start": "2027-10-26T09:00:00-05:00",
+    "end": "2027-10-29T17:00:00-05:00",
+    "timezone": "America/Chicago",
+    "venue": "500 E Cesar Chavez St, Austin, TX 78701",
+    "summary": "Four days of keynotes, workshops and real conversations for agency owners who want to grow without burning out.",
+    "tickets": [
+      {
+        "name": "General Admission",
+        "price": 299,
+        "quantity": 1000,
+        "description": "All keynotes, breakout sessions and the expo hall."
+      },
+      {
+        "name": "VIP Pass",
+        "price": 599,
+        "quantity": 200,
+        "description": "Front-row seating, the speaker dinner and lounge access all four days."
+      }
+    ],
+    "venue_name": "Austin Convention Center"
+  },
+  "speakers": [
+    {
+      "name": "Maya Okafor",
+      "title": "Founder & CEO",
+      "company": "Brightline Studio",
+      "label": "Keynote Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-22",
+        "bg": "ffd5c2"
+      }
+    },
+    {
+      "name": "Amara Osei",
+      "title": "VP of Product",
+      "company": "Fernlight AI",
+      "label": "Keynote Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-8",
+        "bg": "d1f4d9"
+      }
+    },
+    {
+      "name": "Marcus Hale",
+      "title": "Head of Growth",
+      "company": "Loopline",
+      "label": "Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-14",
+        "bg": "c7d2fe"
+      }
+    },
+    {
+      "name": "Sofia Lindqvist",
+      "title": "Co-founder & Creative Director",
+      "company": "Pixel & Pine",
+      "label": "Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-18",
+        "bg": "e9d5ff"
+      }
+    },
+    {
+      "name": "Daniel Reyes",
+      "title": "Founder",
+      "company": "Reyes Digital",
+      "label": "Workshop Host",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-2",
+        "bg": "b6e3f4"
+      }
+    },
+    {
+      "name": "Chloe Martin",
+      "title": "Founder",
+      "company": "Copperleaf Agency",
+      "label": "Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-17",
+        "bg": "fde68a"
+      }
+    },
+    {
+      "name": "Ethan Brooks",
+      "title": "Partner",
+      "company": "Harbor Payments",
+      "label": "Panelist",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-20",
+        "bg": "ffdfbf"
+      }
+    },
+    {
+      "name": "Ryan Patel",
+      "title": "CTO",
+      "company": "Brightwave CRM",
+      "label": "Speaker",
+      "avatar": {
+        "style": "notionists",
+        "seed": "ns-12",
+        "bg": "e2e8f0"
+      }
+    }
+  ],
+  "avatar_url": "https://api.dicebear.com/9.x/notionists/svg?seed=<seed>&backgroundColor=<bg>",
+  "sessions": [
+    {
+      "day": 1,
+      "start": "09:30",
+      "end": "10:15",
+      "title": "Opening Keynote: Scaling Without Burning Out",
+      "label": "Keynote",
+      "stage": "Main Ballroom",
+      "speakers": [
+        "Maya Okafor"
+      ]
+    },
+    {
+      "day": 1,
+      "start": "10:30",
+      "end": "11:15",
+      "title": "Pricing Your Services With Confidence",
+      "label": "Workshop",
+      "stage": "Studio B",
+      "speakers": [
+        "Daniel Reyes"
+      ]
+    },
+    {
+      "day": 1,
+      "start": "11:30",
+      "end": "12:15",
+      "title": "Automations That Actually Close Deals",
+      "label": "Breakout",
+      "stage": "Studio A",
+      "speakers": [
+        "Ryan Patel"
+      ]
+    },
+    {
+      "day": 1,
+      "start": "12:30",
+      "end": "13:15",
+      "title": "Lunch & Learn: Local SEO That Books Appointments",
+      "label": "Breakout",
+      "stage": "Expo Hall",
+      "speakers": [
+        "Chloe Martin"
+      ]
+    },
+    {
+      "day": 1,
+      "start": "19:00",
+      "end": "21:00",
+      "title": "VIP Speaker Dinner",
+      "label": "VIP",
+      "stage": "Rooftop Terrace",
+      "speakers": [
+        "Maya Okafor",
+        "Amara Osei"
+      ],
+      "tickets": [
+        "VIP Pass"
+      ]
+    },
+    {
+      "day": 2,
+      "start": "09:30",
+      "end": "10:15",
+      "title": "Building AI Your Clients Will Actually Use",
+      "label": "Keynote",
+      "stage": "Main Ballroom",
+      "speakers": [
+        "Amara Osei"
+      ]
+    },
+    {
+      "day": 2,
+      "start": "10:30",
+      "end": "11:15",
+      "title": "From Projects to Retainers",
+      "label": "Breakout",
+      "stage": "Studio A",
+      "speakers": [
+        "Marcus Hale"
+      ]
+    },
+    {
+      "day": 2,
+      "start": "11:30",
+      "end": "12:15",
+      "title": "Brands People Remember",
+      "label": "Breakout",
+      "stage": "Studio B",
+      "speakers": [
+        "Sofia Lindqvist"
+      ]
+    },
+    {
+      "day": 2,
+      "start": "14:00",
+      "end": "14:45",
+      "title": "Panel: Getting Paid On Time, Every Time",
+      "label": "Panel",
+      "stage": "Main Ballroom",
+      "speakers": [
+        "Ethan Brooks",
+        "Marcus Hale"
+      ]
+    }
+  ],
+  "exhibitors": [
+    {
+      "name": "Brightwave CRM",
+      "tier": "Platinum",
+      "booth": "B-21",
+      "color": "#2563eb",
+      "mark": "wave",
+      "logo": "northstar/logos/brightwave-crm.png"
+    },
+    {
+      "name": "Harbor Payments",
+      "tier": "Platinum",
+      "booth": "B-22",
+      "color": "#0f766e",
+      "mark": "anchor",
+      "logo": "northstar/logos/harbor-payments.png"
+    },
+    {
+      "name": "Pixel & Pine",
+      "tier": "Gold",
+      "booth": "B-14",
+      "color": "#15803d",
+      "mark": "pine",
+      "logo": "northstar/logos/pixel-pine.png"
+    },
+    {
+      "name": "Loopline",
+      "tier": "Gold",
+      "booth": "B-15",
+      "color": "#7c3aed",
+      "mark": "loop",
+      "logo": "northstar/logos/loopline.png"
+    },
+    {
+      "name": "Fernlight AI",
+      "tier": "Gold",
+      "booth": "B-16",
+      "color": "#059669",
+      "mark": "leaf",
+      "logo": "northstar/logos/fernlight-ai.png"
+    },
+    {
+      "name": "Copperleaf Agency",
+      "tier": "Silver",
+      "booth": "B-08",
+      "color": "#c2410c",
+      "mark": "leaf",
+      "logo": "northstar/logos/copperleaf-agency.png"
+    }
+  ],
+  "sponsors": [
+    {
+      "section": "Platinum",
+      "names": [
+        "Brightwave CRM",
+        "Harbor Payments"
+      ]
+    },
+    {
+      "section": "Gold",
+      "names": [
+        "Pixel & Pine",
+        "Loopline",
+        "Fernlight AI"
+      ]
+    }
+  ],
+  "ads": [
+    {
+      "type": "home",
+      "advertiser": "Harbor Payments",
+      "image": "northstar/ads/harbor-payments-home.png",
+      "size": [
+        1080,
+        1920
+      ],
+      "links_to": "exhibitor Harbor Payments"
+    },
+    {
+      "type": "page",
+      "advertiser": "Brightwave CRM",
+      "web_image": "northstar/ads/brightwave-banner-web.png",
+      "mobile_image": "northstar/ads/brightwave-banner-mobile.png",
+      "pages": [
+        "Agenda",
+        "Exhibitors"
+      ],
+      "links_to": "exhibitor Brightwave CRM"
+    }
+  ],
+  "attendees": {
+    "email_pattern": "first.last@example.com",
+    "vip": [
+      "Noah Kim",
+      "Riley Morgan",
+      "Grace Park",
+      "Samuel Adeyemi",
+      "Jordan Blake"
+    ],
+    "general": [
+      "Ava Thompson",
+      "Liam Carter",
+      "Emma Rossi",
+      "Hannah Whitfield",
+      "Jordan Lee",
+      "Leah Goldberg",
+      "Mateo Alvarez",
+      "Owen Mitchell",
+      "Zara Ahmed",
+      "Lucas Brennan",
+      "Isla Fraser",
+      "Nina Petrova",
+      "Theo Laurent",
+      "Aisha Rahman",
+      "Ben Hollis",
+      "Freya Nilsson"
+    ]
+  },
+  "do_not_use": [
+    "Real people, colleagues, customers or brands",
+    "LevelUp / HighLevel event data (unless the author asks for a real-world proof card)",
+    "Staging junk names (e.g. 'Test Internal Event', 'TTTTTTT')",
+    "Real-looking emails or phone numbers"
+  ],
+  "inbox": [
+    {
+      "from": "Harbor Payments",
+      "subject": "Invoice #4821 paid"
+    },
+    {
+      "from": "Loopline",
+      "subject": "Your weekly digest"
+    },
+    {
+      "from": "Brightwave CRM",
+      "subject": "3 new leads assigned"
+    },
+    {
+      "from": "Security",
+      "subject": "New sign-in on Mac"
+    },
+    {
+      "from": "Calendar",
+      "subject": "Updated: Team sync"
+    },
+    {
+      "from": "Pixel & Pine",
+      "subject": "Brand refresh draft"
+    },
+    {
+      "from": "Team Updates",
+      "subject": "Standup notes, Tuesday"
+    },
+    {
+      "from": "Weekend Sale",
+      "subject": "30% off ends tonight"
+    },
+    {
+      "from": "Marketing Weekly",
+      "subject": "This week in growth"
+    },
+    {
+      "from": "Fernlight AI",
+      "subject": "Your trial ends soon"
+    },
+    {
+      "from": "Copperleaf Agency",
+      "subject": "Re: proposal v2"
+    },
+    {
+      "from": "Dana Ortiz",
+      "subject": "Quick question"
+    }
+  ],
+  "_inbox_about": "Fictional inbox rows for the cold-open pile (Dana Ortiz is a fictional colleague who only appears here)."
+}

@@ -1,0 +1,12 @@
+{
+  "name": "events-release-kit",
+  "owner": { "name": "Shreyansh Shrey" },
+  "metadata": { "description": "Release kit for the HighLevel Events team." },
+  "plugins": [
+    {
+      "name": "events-release",
+      "source": "./plugins/events-release",
+      "description": "Release pack for anything the Events team ships: narrated house-style video, release note and screenshot cards, with a live progress band."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "layout": "side",
+  "kicker": "03 \u00b7 EVERYWHERE",
+  "dot": "blue",
+  "headline": "One event,\n*every* screen.",
+  "subhead": "Members find the event in the portal, then carry it in their pocket.",
+  "bullets": [
+    "Register from the portal",
+    "Ticket and agenda in the app",
+    "Changes sync both ways"
+  ],
+  "layers": [
+    {
+      "kind": "browser",
+      "src": "in-02-portal.png",
+      "url": "members.northstarcollective.com/events",
+      "x": 690,
+      "y": 140,
+      "w": 800,
+      "h": 560,
+      "z": 1
+    },
+    {
+      "kind": "phone",
+      "src": "in-04-phone1.png",
+      "x": 1270,
+      "y": 330,
+      "w": 250,
+      "rotate": 4,
+      "z": 2
+    }
+  ]
+}

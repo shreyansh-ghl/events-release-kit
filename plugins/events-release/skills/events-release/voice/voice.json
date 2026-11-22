@@ -1,0 +1,23 @@
+{
+  "_about": "House narrator for every Events release video. Recovered 22 Nov 2026 from the Attendee App launch film's Voicebox history (profile 'Attendee App VO - Aiden', 123 final lines at seed 7). Do not change without the owner's OK: consistency across teammates depends on these exact values.",
+  "app": "Voicebox (local TTS, Qwen3-TTS). Server: http://localhost:17493 (started by the Voicebox app).",
+  "profile": {
+    "name": "Events House Narrator",
+    "description": "House narrator for Events release videos (preset voice Aiden).",
+    "language": "en",
+    "voice_type": "preset",
+    "preset_engine": "qwen_custom_voice",
+    "preset_voice_id": "Aiden",
+    "default_engine": "qwen_custom_voice"
+  },
+  "generate": {
+    "engine": "qwen_custom_voice",
+    "model_size": "1.7B",
+    "seed": 7,
+    "language": "en",
+    "normalize": true
+  },
+  "base_instruct": "Warm, confident male narrator of a premium product launch film. Natural and human, with real feeling: clear enunciation, varied pitch and pace, and energy that stays up to the last word. Never robotic or flat.",
+  "instruct_rule": "instruct = base_instruct + ' ' + per-line direction (max 500 chars total). One short line per generation; never a whole paragraph.",
+  "product_name_on_air": "Say the product as 'Events' plus the feature name (e.g. \"Events' Attendee App\"); see directions.md."
+}

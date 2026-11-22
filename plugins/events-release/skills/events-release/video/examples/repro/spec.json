@@ -1,0 +1,229 @@
+{
+  "_about": "Reproduces the Attendee App film's cold open, title, first chapter and end card with the house template. Screens are crops of the film; VO is the film's own takes.",
+  "fps": 60,
+  "vo_manifest": "vo/vo-manifest.json",
+  "scenes": [
+    {
+      "kind": "cold_open",
+      "beats": [
+        {
+          "text": "Every event used to end\nat registration.",
+          "vo": "c1",
+          "hold": 0.5
+        },
+        {
+          "text": "Then it got lost\nin the inbox.",
+          "vo": "c2",
+          "hold": 0.4
+        }
+      ],
+      "payoff": {
+        "text": "Not anymore.",
+        "vo": "c3"
+      },
+      "prop": {
+        "src": "screens/email.png",
+        "width": 940,
+        "pile": {
+          "label": "unread",
+          "to": 7452,
+          "hero": {
+            "from": "Northstar Collective",
+            "subject": "You're registered for Northstar Summit 2026"
+          },
+          "items": [
+            {
+              "from": "Harbor Payments",
+              "subject": "Invoice #4821 paid"
+            },
+            {
+              "from": "Loopline",
+              "subject": "Your weekly digest"
+            },
+            {
+              "from": "Brightwave CRM",
+              "subject": "3 new leads assigned"
+            },
+            {
+              "from": "Security",
+              "subject": "New sign-in on Mac"
+            },
+            {
+              "from": "Calendar",
+              "subject": "Updated: Team sync"
+            },
+            {
+              "from": "Pixel & Pine",
+              "subject": "Brand refresh draft"
+            },
+            {
+              "from": "Team Updates",
+              "subject": "Standup notes, Tuesday"
+            },
+            {
+              "from": "Weekend Sale",
+              "subject": "30% off ends tonight"
+            },
+            {
+              "from": "Marketing Weekly",
+              "subject": "This week in growth"
+            },
+            {
+              "from": "Fernlight AI",
+              "subject": "Your trial ends soon"
+            },
+            {
+              "from": "Copperleaf Agency",
+              "subject": "Re: proposal v2"
+            },
+            {
+              "from": "Dana Ortiz",
+              "subject": "Quick question"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "title",
+      "kicker": "HIGHLEVEL",
+      "headline": "Introducing the *Events' Attendee App*.",
+      "laptop": {
+        "src": "screens/builder-off.png",
+        "url": "app.gohighlevel.com/memberships/events/northstar-summit-2026"
+      },
+      "vo": [
+        "t1"
+      ]
+    },
+    {
+      "kind": "chapter",
+      "label": "Your app",
+      "shots": [
+        {
+          "vo": [
+            "s1"
+          ],
+          "vo_at": 1.0,
+          "min": 5.2,
+          "laptop": {
+            "src": "screens/builder-off.png",
+            "url": "app.gohighlevel.com/memberships/events/northstar-summit-2026",
+            "swaps": [
+              {
+                "t": 2.75,
+                "src": "screens/builder-on.png"
+              }
+            ]
+          },
+          "camera": [
+            {
+              "t": 0,
+              "x": 960,
+              "y": 540,
+              "zoom": 1
+            },
+            {
+              "t": 1.9,
+              "x": 1131,
+              "y": 567,
+              "zoom": 2.2
+            },
+            {
+              "t": 4.0,
+              "x": 1150,
+              "y": 575,
+              "zoom": 2.3
+            },
+            {
+              "t": 5.2,
+              "x": 1060,
+              "y": 550,
+              "zoom": 1.25
+            }
+          ],
+          "cursor": [
+            [
+              1.2,
+              1750,
+              760
+            ],
+            [
+              2.5,
+              2168,
+              540
+            ],
+            [
+              2.7,
+              2168,
+              540,
+              "click"
+            ],
+            [
+              3.6,
+              2190,
+              575
+            ]
+          ]
+        },
+        {
+          "vo": [
+            "s2"
+          ],
+          "vo_at": 0.7,
+          "min": 4.2,
+          "laptop": {
+            "src": "screens/builder-on.png",
+            "url": "app.gohighlevel.com/memberships/events/northstar-summit-2026"
+          },
+          "phone": {
+            "src": "screens/phone-profile.png",
+            "enter": 0.0
+          },
+          "focus": [
+            [
+              0,
+              "laptop"
+            ],
+            [
+              0.7,
+              "phone"
+            ]
+          ],
+          "camera": [
+            {
+              "t": 0,
+              "x": 1060,
+              "y": 550,
+              "zoom": 1.25
+            },
+            {
+              "t": 1.0,
+              "x": 1255,
+              "y": 525,
+              "zoom": 1.32
+            },
+            {
+              "t": 4.2,
+              "x": 1262,
+              "y": 530,
+              "zoom": 1.36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "end",
+      "tagline": "Your event, in every\nattendee's *pocket*.",
+      "subline": "In your own branded app. Set up in minutes inside HighLevel.",
+      "available": "Available now",
+      "where": "Turn it on in Events → Attendee App",
+      "product": "Events' Attendee App",
+      "vo": [
+        "e1",
+        "e2"
+      ]
+    }
+  ]
+}

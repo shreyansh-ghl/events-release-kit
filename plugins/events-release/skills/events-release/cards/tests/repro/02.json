@@ -1,0 +1,13 @@
+{
+  "layout": "hero",
+  "kicker": "NEW IN HIGHLEVEL EVENTS",
+  "dot": "blue",
+  "headline": "Events, now in your *Client Portal*.",
+  "subhead": "Members discover events, register and manage tickets in the portal they already use.",
+  "frame": {
+    "src": "in-02-portal.png",
+    "url": "members.northstarcollective.com/events"
+  },
+  "frame_width": 861,
+  "frame_top": 300
+}

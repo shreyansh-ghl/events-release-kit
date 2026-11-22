@@ -1,0 +1,16 @@
+{
+  "status": "captured",
+  "namespace": "platform",
+  "repoName": "events-release",
+  "branch": null,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"stored\": 0,\n  \"updated\": 0,\n  \"skipped\": 1,\n  \"candidates\": [],\n  \"memories\": [],\n  \"skipped_reasons\": [\n    \"no_memory_intent\"\n  ]\n}"
+      }
+    ]
+  },
+  "error": null,
+  "updatedAt": "2026-11-22T14:36:01.245Z"
+}

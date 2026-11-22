@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Events release card</title>
+<!--
+  House screenshot card. Laid out at 1600x1000 CSS px, captured at 2x = 3200x2000.
+  render_card.py copies this file next to the output and fills the #card JSON block.
+  All card text is set with textContent, never innerHTML.
+-->
+<style>
+  @font-face { font-family: "Instrument Serif"; src: url("FONTS/InstrumentSerif-Regular.ttf"); font-style: normal; }
+  @font-face { font-family: "Instrument Serif"; src: url("FONTS/InstrumentSerif-Italic.ttf"); font-style: italic; }
+  @font-face { font-family: "Inter"; src: url("FONTS/Inter-Variable.ttf"); font-weight: 100 900; font-style: normal; }
+  @font-face { font-family: "Geist"; src: url("FONTS/Geist-Variable.ttf"); font-weight: 100 900; }
+
+  :root {
+    --paper-hi: #f6f3ee; --paper: #eeeae3; --paper-edge: #e2ddd4;
+    --ink: #171512; --muted: #6d665c;
+    --blue: #1a89f1; --amber: #f9b803; --green: #37ca37;
+    --shadow: 0 30px 60px rgba(40, 32, 22, 0.20), 0 8px 18px rgba(40, 32, 22, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 1000px; overflow: hidden; }
+  body {
+    position: relative;
+    background: radial-gradient(ellipse 85% 80% at 45% 36%, var(--paper-hi) 0%, var(--paper) 52%, var(--paper-edge) 100%);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after { /* faint paper grain */
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.05; z-index: 50;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- text ---------- */
+  .kicker { font: 500 15.5px/1 "Geist", sans-serif; letter-spacing: 0.125em; text-transform: uppercase; color: var(--muted);
+            display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+  .kicker .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .headline { font-family: "Instrument Serif", serif; font-weight: 400; color: var(--ink); letter-spacing: -0.012em; }
+  .headline em { font-style: italic; }
+  .subhead { font: 400 20.85px/30.5px "Inter", sans-serif; color: var(--muted); }
+  .bullets { list-style: none; margin-top: 22px; display: grid; gap: 11px; font: 500 15px/1.35 "Inter", sans-serif; color: var(--ink); }
+  .bullets li { display: flex; gap: 10px; align-items: flex-start; }
+  .bullets li::before { content: ""; flex: none; width: 17px; height: 17px; margin-top: 0.5px; border-radius: 50%;
+    background: var(--ink) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4.5 8.2l2.3 2.3 4.7-5' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat; }
+
+  .hero-text { position: absolute; left: 0; right: 0; top: 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero-text .kicker { margin-top: 66px; }
+  .hero-text .headline { font-size: 88.5px; line-height: 1; margin-top: 23px; white-space: nowrap; }
+  .hero-text .subhead { margin-top: 20px; white-space: nowrap; }
+
+  .side-text { position: absolute; left: 111px; width: 470px; }
+  .side-text .headline { font-size: 68px; line-height: 69.5px; margin-top: 27.5px; }
+  .side-text .subhead { margin-top: 26px; }
+
+  /* ---------- devices ---------- */
+  .layer { position: absolute; transform-origin: center center; }
+  .browser { border-radius: 15px; background: #f9f9f8; box-shadow: var(--shadow); overflow: hidden;
+             outline: 1px solid rgba(60, 50, 35, 0.10); outline-offset: -1px; }
+  .browser .bar { height: 38px; background: #ece9e4; border-bottom: 1px solid #dcd7cf; position: relative; }
+  .browser .lights { position: absolute; left: 16px; top: 13.5px; display: flex; gap: 8px; }
+  .browser .lights i { width: 11px; height: 11px; border-radius: 50%; background: #d2ccc2; display: block; }
+  .browser .url { position: absolute; left: 163px; right: 136px; top: 8.5px; height: 21px; border-radius: 6px;
+                  background: #e2ddd5; font: 400 12.5px/21px "Inter", sans-serif; color: #6d665c; text-align: center;
+                  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 12px; }
+  .browser img, .panel img { display: block; width: 100%; height: auto; }
+
+  .panel { border-radius: 12px; background: #fff; box-shadow: var(--shadow); overflow: hidden;
+           outline: 1px solid rgba(60, 50, 35, 0.10); outline-offset: -1px; }
+
+  .phone { background: #11100f; box-shadow: var(--shadow); }
+  .phone .screen { position: absolute; overflow: hidden; background: #fafafa; }
+  .phone .screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .phone .island { position: absolute; left: 50%; transform: translateX(-50%); background: #0b0a0a; }
+
+  .caption { position: absolute; font: 500 14px/1 "Geist", sans-serif; letter-spacing: 0.2em; text-transform: uppercase;
+             color: var(--muted); text-align: center; white-space: nowrap; }
+</style>
+</head>
+<body>
+<script id="card" type="application/json">CARD_JSON</script>
+<script>
+(() => {
+  const spec = JSON.parse(document.getElementById("card").textContent);
+  const W = 1600, H = 1000;
+  const DOTS = { blue: "var(--blue)", amber: "var(--amber)", green: "var(--green)" };
+  const el = (tag, cls, parent) => { const n = document.createElement(tag); if (cls) n.className = cls; if (parent) parent.appendChild(n); return n; };
+
+  // "*word*" marks the one italic emphasis; "\n" is a deliberate line break; everything else is plain text.
+  const headline = (parent, text) => {
+    const h = el("h1", "headline", parent);
+    text.split("\n").forEach((line, i) => {
+      if (i) el("br", null, h);
+      line.split(/(\*[^*]+\*)/).filter(Boolean).forEach(part => {
+        if (part.startsWith("*") && part.endsWith("*")) el("em", null, h).textContent = part.slice(1, -1);
+        else h.appendChild(document.createTextNode(part));
+      });
+    });
+    if (spec.headline_size) h.style.fontSize = spec.headline_size + "px";
+    return h;
+  };
+  const kicker = (parent) => {
+    const k = el("div", "kicker", parent);
+    el("span", "dot", k).style.background = DOTS[spec.dot] || spec.dot;
+    el("span", null, k).textContent = spec.kicker;
+  };
+  const textBlock = (cls) => {
+    const box = el("div", cls, document.body);
+    kicker(box);
+    headline(box, spec.headline);
+    if (spec.subhead) el("p", "subhead", box).textContent = spec.subhead;
+    if (spec.bullets && spec.bullets.length) {
+      const ul = el("ul", "bullets", box);
+      spec.bullets.forEach(b => { el("li", null, ul).textContent = b; });
+    }
+    return box;
+  };
+
+  // ---- device builders: x, y = top-left in CSS px; w = outer width ----
+  const loaded = [];
+  const img = (parent, src) => {
+    const i = el("img", null, parent);
+    loaded.push(new Promise((ok, fail) => {
+      i.onload = ok; i.onerror = () => fail(new Error("image failed to load: " + src));
+    }));
+    i.src = src;
+    return i;
+  };
+  const place = (node, L) => {
+    node.style.left = L.x + "px"; node.style.top = L.y + "px"; node.style.width = L.w + "px";
+    if (L.rotate) node.style.transform = `rotate(${L.rotate}deg)`;
+    if (L.z != null) node.style.zIndex = L.z;
+  };
+  const browser = (L) => {
+    const b = el("div", "layer browser", document.body); place(b, L);
+    const bar = el("div", "bar", b);
+    const lights = el("div", "lights", bar); for (let i = 0; i < 3; i++) el("i", null, lights);
+    if (L.url) el("div", "url", bar).textContent = L.url;
+    img(b, L.src);
+    if (L.h) { b.style.height = L.h + "px"; }
+    return b;
+  };
+  const panel = (L) => { const p = el("div", "layer panel", document.body); place(p, L); img(p, L.src); if (L.h) p.style.height = L.h + "px"; return p; };
+  const PHONE_RATIO = 599 / 289;            // outer height / width, measured from the reference cards
+  const phone = (L) => {
+    const p = el("div", "layer phone", document.body); place(p, L);
+    const w = L.w, h = w * PHONE_RATIO, bezel = w * 0.038, r = w * 0.163;
+    p.style.height = h + "px"; p.style.borderRadius = r + "px";
+    const s = el("div", "screen", p);
+    Object.assign(s.style, { left: bezel + "px", top: bezel + "px", right: bezel + "px", bottom: bezel + "px", borderRadius: (r - bezel) + "px" });
+    img(s, L.src);
+    if (L.island !== false) {
+      const isl = el("div", "island", p);
+      Object.assign(isl.style, { width: w * 0.294 + "px", height: w * 0.1 + "px", top: bezel + w * 0.021 + "px", borderRadius: w * 0.05 + "px" });
+    }
+    if (L.caption) {
+      const c = el("div", "caption", document.body); c.textContent = L.caption;
+      c.style.left = L.x + "px"; c.style.width = w + "px"; c.style.top = (L.y + h + 52) + "px";
+    }
+    return p;
+  };
+  const BUILD = { browser, panel, phone };
+
+  // ---- layouts ----
+  let layers = spec.layers || [];
+  if (spec.layout === "hero") {
+    textBlock("hero-text");
+    const fw = spec.frame_width || 861;
+    layers = [Object.assign({ kind: "browser", x: (W - fw) / 2, y: spec.frame_top || 300, w: fw }, spec.frame)];
+  } else {
+    const box = textBlock("side-text");
+    box.style.top = (spec.text_top != null ? spec.text_top : 232) + "px";
+    if (spec.stage === "phones") {           // row of 1-3 phones with captions, centred in the stage
+      const n = spec.phones.length, pw = spec.phone_width || 289, gap = spec.phone_gap || 21.5;
+      const stageL = 640, stageR = W - 51, total = n * pw + (n - 1) * gap;
+      const x0 = stageL + (stageR - stageL - total) / 2, y0 = spec.phone_top != null ? spec.phone_top : 153;
+      layers = spec.phones.map((ph, i) => Object.assign({ kind: "phone", x: x0 + i * (pw + gap), y: y0, w: pw }, ph));
+    }
+  }
+  layers.forEach(L => BUILD[L.kind](L));
+
+  // Layout guardrails, checked after fonts load: fail the render instead of shipping a broken card.
+  const checkLayout = () => {
+    const h = document.querySelector(".headline");
+    const lh = parseFloat(getComputedStyle(h).lineHeight) || parseFloat(getComputedStyle(h).fontSize);
+    if (spec.layout === "hero" && h.getBoundingClientRect().width > W - 120)
+      throw new Error("hero headline is wider than the card; shorten it");
+    if (spec.layout !== "hero" && h.getBoundingClientRect().height > lh * 2.2)
+      throw new Error("headline runs to 3+ lines; shorten it or move the \\n break");
+    const sub = document.querySelector(".subhead");
+    if (sub && spec.layout === "hero" && sub.getBoundingClientRect().width > W - 160)
+      throw new Error("hero subhead is wider than the card; shorten it");
+    if (sub && spec.layout !== "hero" && sub.getBoundingClientRect().height > 30.5 * 3.2)
+      throw new Error("subhead runs past 3 lines; shorten it");
+  };
+  Promise.all([document.fonts.ready, ...loaded]).then(checkLayout).then(
+    () => { document.body.dataset.ready = "1"; },
+    (err) => { document.body.dataset.ready = "error"; document.title = "ERROR " + err.message; });
+})();
+</script>
+</body>
+</html>
