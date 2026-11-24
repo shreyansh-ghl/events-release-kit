@@ -7,7 +7,11 @@ Capture a page as tiles and stitch them here.
         Each tile is "<file>@x,y,w,h": the zoom region in page CSS px. For a long page, add window.scrollY to y
         (scroll with JS, read scrollY, zoom, repeat). Output scale = the tiles' own px-per-CSS-px.
     python3 -I tiles.py grid <viewport_w> <viewport_h> [cols] [rows]
-        Prints the zoom regions to request (default 3x2) so tiles are small enough to come back at full resolution.
+        Prints each tile twice: `zoom x0,y0,x1,y1` (what Chrome's zoom action takes) and `stitch @x,y,w,h` (what
+        stitch/patch take). Default 3x2. At the laptop viewport 1381x828 use 2 2: 690x414 tiles still come back at 2x.
+    python3 -I tiles.py patch out.png before.png tile1.png@x,y,w,h ...
+        A click that changes only part of the screen: re-zoom just those tiles and paste them onto the previous
+        frame. The previous frame is left untouched, so before/after stay a real pair.
     python3 -I tiles.py sheet out.png img1 img2 ...   [--cols 3]
         Contact sheet for checkpoints (each image fitted into a 1000x625 cell).
 """
@@ -47,6 +51,22 @@ def stitch(out: Path, tiles: list[str]) -> Path:
     return out
 
 
+def patch(out: Path, before: Path, tiles: list[str]) -> Path:
+    """Copy `before` and paste the given tiles over it at the frame's own px-per-CSS-px."""
+    parsed = [parse_tile(t) for t in tiles]
+    images = [(Image.open(f).convert("RGB"), r) for f, r in parsed]
+    scale = statistics.median(im.width / r[2] for im, r in images)
+    canvas = Image.open(before).convert("RGB").copy()
+    for im, (x, y, rw, rh) in images:
+        size = (round(rw * scale), round(rh * scale))
+        if im.size != size:
+            im = im.resize(size, Image.LANCZOS)
+        canvas.paste(im, (round(x * scale), round(y * scale)))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out, optimize=True)
+    return out
+
+
 def grid(vw: float, vh: float, cols: int = 3, rows: int = 2) -> list[tuple[int, int, int, int]]:
     tw, th = vw / cols, vh / rows
     regions = []
@@ -55,6 +75,12 @@ def grid(vw: float, vh: float, cols: int = 3, rows: int = 2) -> list[tuple[int, 
             x0, y0 = round(c * tw), round(r * th)
             regions.append((x0, y0, round((c + 1) * tw) - x0, round((r + 1) * th) - y0))
     return regions
+
+
+def zoom_box(region: tuple[int, int, int, int]) -> tuple[int, int, int, int]:
+    """x,y,w,h → the x0,y0,x1,y1 box that Chrome's zoom action expects."""
+    x, y, w, h = region
+    return (x, y, x + w, y + h)
 
 
 def sheet(out: Path, files: list[str], cols: int = 3, labels: bool = True) -> Path:
@@ -91,7 +117,11 @@ def main(argv: list[str]) -> int:
         elif cmd == "grid":
             nums = [float(a) for a in argv[2:4]] + [int(a) for a in argv[4:6]]
             for reg in grid(*nums):
-                print(list(reg))
+                print("zoom " + ",".join(map(str, zoom_box(reg))) + "   stitch @" + ",".join(map(str, reg)))
+        elif cmd == "patch":
+            if len(argv) < 5:
+                raise ValueError("usage: patch out.png before.png tile.png@x,y,w,h ...")
+            print(patch(Path(argv[2]), Path(argv[3]), argv[4:]))
         elif cmd == "sheet":
             cols = int(argv[argv.index("--cols") + 1]) if "--cols" in argv else 3
             files = [a for i, a in enumerate(argv[3:], 3) if not a.startswith("--") and argv[i - 1] != "--cols"]

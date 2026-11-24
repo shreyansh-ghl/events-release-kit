@@ -7,26 +7,39 @@ You make the narrated release video for one Events release. You are given `KIT` 
 - Work only inside `RUN/video/` and `RUN/video-spec.json`. Never edit `KIT`; if the template is wrong, report it.
 - Never use a browser, never post, never message anyone. The main session talks to the author.
 - Real UI only: use the captured screens in `RUN/shots/raw/`. If a moment has no screen, say it in the voice only.
+- Tell a story, not a feature tour. Follow the journey in `RUN/shots/story.md` and the states in
+  `RUN/shots/raw/motion/MANIFEST.md` in order. Each line narrates the click on screen under it. A line that only lists
+  capabilities over a still screen ("Pick a layout: grid, list…") is the "reading pointers" feel the author rejected.
 - Read `KIT/reference/guardrails.md` first. Tone: professional, warm, confident; no jokes.
 - Progress: `python3 -I KIT/scripts/run.py session RUN video doing --step "<step>"` at each step below; `done` at the end
   (or `blocked --note "why"`).
 
 ## Read first
-`RUN/brief.md` (facts, interview, story, checkpoint A notes) · `RUN/shots/plan.json` · `KIT/voice/directions.md` ·
+`RUN/brief.md` (facts, interview, story, checkpoint A notes) · `RUN/shots/story.md` (acts + click list) ·
+`RUN/shots/raw/motion/MANIFEST.md` (every captured state, next click at px x,y) · `KIT/voice/directions.md` ·
 `KIT/video/README.md` · `KIT/video/examples/repro/spec.json` (a full working spec) · `KIT/northstar/world.json`.
 
 ## 1. Script (step "script")
 Write `RUN/video/vo-script.json`: `[{"id": "c1", "text": "...", "direction": "..."}]`, 30–120 s in total.
-- **Cold open (ink):** two short beats of the old pain + the turn ("Not anymore."). From the brief, never invented.
+- **Cold open (ink):** two short beats that set up the journey: what the user already has, then what they need
+  ("You've got the events." / "Now give them a home: one page on your site that lists them all."). From the brief,
+  never invented. Avoid the stock pain + "Not anymore." turn; the author found it weak.
 - **Title:** "Meet the Events' <Feature>, …" (one line). Headline on screen: `Introducing the *Events' <Feature>*.`
   (the film's wording; keep "the").
-- **Chapters:** 1–4, one per surface or big benefit, label ≤ 3 words in caps style ("BEFORE THE EVENT"). Each shot =
-  one action on screen + 1–2 lines. Use spoken turns between chapters ("Now, for your sponsors.").
+- **Chapters = the story's acts** (2–3), named for what the user does ("BUILD IT ONCE", "ADD AN EVENT", "YOUR
+  VISITORS BOOK"), label ≤ 3 words in caps style. Each shot = one or a few real clicks + 1 line that says what that
+  click does for the user ("Publish it the way you always do."). Land the payoff moment on its own line, over the
+  before → after cut ("And it's already on your site, in date order."). Use spoken turns between acts ("Now plan your
+  next event.").
 - **End:** "The Events' <Feature>, from HighLevel. <payoff>." + the availability line. Availability (interview) =
   Everyone → "Available now."; rolling out, feature flag or specific plans → "Rolling out now.". The end card's
   `available` field says exactly the same words.
 - Lines are 3–14 words; directions come from `KIT/voice/directions.md` (copy the closest one, adjust lightly).
 - Say the product as "Events'" + the feature name. Claim only what the brief says.
+
+**Stop here.** Mark `run.py session RUN video doing --step "script: waiting for go"` and report the script as a table:
+id · text · direction · the motion states and clicks it plays over. The author approves the script before any voice
+is made; you will be resumed with a go or with changes.
 
 ## 2. Voice (step "voice")
 `python3 -I KIT/voice/vo.py script RUN/video/vo-script.json RUN/video/vo/` → wavs + `vo-manifest.json`.
@@ -37,7 +50,12 @@ your report which lines the author should listen to (product names, unusual word
 
 ## 3. Spec (step "spec")
 Write `RUN/video-spec.json` (paths relative to `RUN`; format in `KIT/video/scripts/release_video.py`):
-- `"vo_manifest": "video/vo/vo-manifest.json"`; screens as `shots/raw/web/<id>.png`, `shots/raw/phone/<id>.png`.
+- `"vo_manifest": "video/vo/vo-manifest.json"`; screens as `shots/raw/motion/<state>.png` (the story frames, in
+  MANIFEST order), plus `shots/raw/phone/<id>.png`. Use `shots/raw/web/` card captures only when a state has no motion
+  frame.
+- Clicks come from the MANIFEST: cursor to the listed px, `click`, then a `swaps` entry to the next state ~0.05 s later.
+  Nudge a click point to the lower right of its button so the pointer doesn't cover the label. A drag is press → glide
+  → press; a reload is a hard cut between two shots. Push in on the part of the screen that changed.
 - Scenes in house order: `cold_open` → `title` → `chapter`… → (optional `interstitial`) → `end`.
 - Cold open: `prop` is optional (a real captured screen of the old way). Use `pile` only for a "lost in the noise" story;
   its rows come from `world.json → inbox` (from + subject), the hero is the email/screen that got lost.

@@ -61,8 +61,12 @@ this feature needs is seeded (author approves each create; add new fictional rec
 ## 4 · Capture + cards
 
 Follow `reference/capture.md`:
-1. Write the **shot plan** (`RUN/shots/plan.json`): ≤ 9 cards (hero first) + the video's screens. `run.py set RUN shots=<n>`.
-2. Web shots in Chrome (Builder, public page, Client Portal): zoom tiles → `KIT/scripts/tiles.py stitch`. Read-only; Cancel dialogs.
+1. Write the **shot plan** (`RUN/shots/plan.json`): ≤ 9 cards (hero first). `run.py set RUN shots=<n>`.
+   If video: write the **story + click list** (`RUN/shots/story.md`, capture.md §2): one journey, 2–3 acts, the payoff
+   moment, every state and the real click between states. Seed anything that must change on camera (author's yes).
+2. Web shots in Chrome at the 1381×828 viewport: zoom tiles → `KIT/scripts/tiles.py stitch`. Video states go to
+   `RUN/shots/raw/motion/` + `MANIFEST.md` with click px, captured after real clicks (`tiles.py patch` for partial
+   changes). Read-only outside Northstar; Cancel dialogs.
 3. Mobile: write `RUN/shots/phone-shotlist.md`, show it, `run.py ask` the author for phone screenshots in `RUN/shots/raw/phone/`.
 4. Write a card spec per card (`RUN/shots/specs/NN-<id>.json`) and render with `KIT/cards/render_card.py` → `RUN/shots/final/`.
 5. Write the **story paragraph** (problem → what's new → payoff, 4–6 sentences) and the headline into `brief.md` → "Story".
@@ -70,8 +74,9 @@ Follow `reference/capture.md`:
 ## ── Checkpoint A ──
 
 Show: contact sheet (`tiles.py sheet RUN/qa/checkpoint-a.png RUN/shots/final/*.png`), the story paragraph, headline,
-release type + label, and (if video) the 1-line arc per chapter. Ask with `AskUserQuestion`: Approve · Change shots ·
-Change story. Loop on changes until approved. Record "Checkpoint A approved <time>" in `brief.md`.
+release type + label, and (if video) the storyboard (`RUN/qa/story-board.png`) with the acts and their clicks. Ask with
+`AskUserQuestion`: Approve · Change shots · Change story. Loop on changes until approved. Record "Checkpoint A approved
+<time>" in `brief.md`.
 
 ## 5 · Build (two sessions in parallel)
 
@@ -80,6 +85,10 @@ Start both workers in **one message** with the `Agent` tool (`subagent_type: gen
 Skip `video` when the author said no. While they run, the main session stays with the author (it is the only one that
 drives Chrome or asks questions) and watches `run.py show RUN`. Each worker reports back when done; relay the
 essentials, never fabricate a result that hasn't arrived.
+
+The video worker stops after its script. Show the author the full VO script as a table (line · words · the screen and
+click under it) and get a yes; relay changes or the yes to the worker with `SendMessage` (the Agent tool has no name
+parameter: address workers by the agentId it returns). Only then does it generate voice and render.
 
 ## 6 · QA
 

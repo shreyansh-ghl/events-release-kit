@@ -58,9 +58,10 @@ The kit then:
 3. **Interviews** you only for the gaps (release type, label, surfaces, video yes/no, availability…).
 4. **Checks Northstar**: the demo event is there and its dates are still upcoming.
 5. **Captures** real screens in your Chrome (read-only outside Northstar) and asks for phone screenshots if the mobile
-   app is involved; renders the cards.
-6. **Checkpoint A**: you approve the shots and the one-paragraph story.
-7. **Builds** the video and the note in two parallel sessions.
+   app is involved; renders the cards. For the video it plans one journey through the feature and captures every
+   click as a real before/after frame, so the video shows the product doing the work, not a tour of settings.
+6. **Checkpoint A**: you approve the shots, the one-paragraph story and the video storyboard.
+7. **Builds** the video and the note in two parallel sessions. You approve the voice-over script before any voice is made.
 8. **QA**: OCR on every image and video frame (no real names, no staging junk, no stray HTML), note format lint, size limits.
 9. **Checkpoint B**: you review the pack; changes go back to the right session.
 10. **Posts** to `#events-core-internal` from your own Slack, only after you say "post it".

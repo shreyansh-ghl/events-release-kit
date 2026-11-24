@@ -18,6 +18,26 @@ def test_grid_covers_viewport_exactly() -> None:
     assert max(x + w for x, _, w, _ in regions) == 1542
 
 
+def test_zoom_box_gives_corners_for_chrome_zoom() -> None:
+    # Chrome's zoom action takes x0,y0,x1,y1; stitch takes x,y,w,h. Both must describe the same tile.
+    regions = tiles.grid(1381, 828, 2, 2)
+    assert [tiles.zoom_box(r) for r in regions] == [
+        (0, 0, 690, 414), (690, 0, 1381, 414), (0, 414, 690, 828), (690, 414, 1381, 828)]
+
+
+def test_patch_replaces_only_the_changed_tiles(tmp_path: Path) -> None:
+    base = tmp_path / "before.png"
+    Image.new("RGB", (400, 200), "white").save(base)  # a 200x100 CSS viewport at 2x
+    tile = tmp_path / "toggle.png"
+    Image.new("RGB", (200, 100), "red").save(tile)  # re-zoomed bottom-right quarter after a click
+    out = tiles.patch(tmp_path / "after.png", base, [f"{tile}@100,50,100,50"])
+    im = Image.open(out).convert("RGB")
+    assert im.size == (400, 200)
+    assert im.getpixel((10, 10)) == (255, 255, 255)
+    assert im.getpixel((390, 190)) == (255, 0, 0)
+    assert Image.open(base).convert("RGB").getpixel((390, 190)) == (255, 255, 255)  # the before frame is untouched
+
+
 def test_stitch_places_tiles_at_2x(tmp_path: Path) -> None:
     files = []
     colours = ["red", "green", "blue", "yellow"]
